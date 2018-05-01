@@ -1,5 +1,7 @@
 package com.tencent.weili.entity;
 
+import java.util.List;
+
 public class User {
 
     private String openId;
@@ -7,6 +9,16 @@ public class User {
     private String nickname;
 
     private String avatar;
+
+    private List<Activity> activityList;
+
+    public List<Activity> getActivityList() {
+        return activityList;
+    }
+
+    public void setActivityList(List<Activity> activityList) {
+        this.activityList = activityList;
+    }
 
     public String getOpenId() {
         return openId;

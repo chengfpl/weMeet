@@ -1,8 +1,11 @@
 package com.tencent.weili.entity;
 
 import java.util.Date;
+import java.util.List;
 
 public class Activity {
+
+    private Integer id;
 
     private String name;
 
@@ -21,6 +24,32 @@ public class Activity {
     private Date endTime;
 
     private Date deadline;
+
+    private List<User> userList;
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public List<User> getUserList() {
+        return userList;
+    }
+
+    public void setUserList(List<User> userList) {
+        this.userList = userList;
+    }
 
     public Integer getTimeType() {
         return timeType;
@@ -54,14 +83,6 @@ public class Activity {
         this.description = description;
     }
 
-    public int getCount() {
-        return count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
-    }
-
     public String getLocation() {
         return location;
     }
@@ -69,8 +90,6 @@ public class Activity {
     public void setLocation(String location) {
         this.location = location;
     }
-
-
 
     public Date getStartTime() {
         return startTime;
@@ -99,11 +118,12 @@ public class Activity {
     @Override
     public String toString() {
         return "Activity{" +
-                "name='" + name + '\'' +
+                "id=" + id +
+                ", name='" + name + '\'' +
                 ", creator='" + creator + '\'' +
                 ", timeType=" + timeType +
                 ", description='" + description + '\'' +
-                ", count='" + count + '\'' +
+                ", count=" + count +
                 ", location='" + location + '\'' +
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +
