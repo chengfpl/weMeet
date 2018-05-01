@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tencent.weili.dao.RecommendActivityDAO">
+
+    <resultMap id="recommendActivityResultMap" type="com.tencent.weili.entity.RecommendActivity">
+        <id property="id" column="id" />
+        <result property="text" column="text" />
+        <result property="kind" column="kind" />
+        <result property="detailText" column="detail_text" />
+    </resultMap>
+
+    <select id="selectRecommendActivityById" parameterType="java.lang.Integer"
+            resultType="com.tencent.weili.entity.RecommendActivity"
+            resultMap="recommendActivityResultMap">
+        SELECT * FROM recommend_activity_table WHERE id = #{id}
+    </select>
+
+    <insert id="insertRecommendActivity" useGeneratedKeys="true" parameterType="com.tencent.weili.entity.RecommendActivity">
+        INSERT INTO
+        recommend_activity_table(text, kind, detail_text)
+        VALUES
+        (#{text}, #{kind}, #{detailText})
+    </insert>
+
+</mapper>

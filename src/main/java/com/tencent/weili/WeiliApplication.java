@@ -5,12 +5,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.sql.Array;
+
 @SpringBootApplication
 @MapperScan("com.tencent.weili.dao")
 public class WeiliApplication {
 
 	public static void main(String[] args) {
-
 		SpringApplication.run(WeiliApplication.class, args);
 	}
 }

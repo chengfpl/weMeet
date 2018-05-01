@@ -2,7 +2,6 @@ package com.tencent.weili.dao;
 
 import com.tencent.weili.entity.Activity;
 import org.apache.ibatis.annotations.Param;
-
 import java.util.List;
 
 public interface ActivityDAO {

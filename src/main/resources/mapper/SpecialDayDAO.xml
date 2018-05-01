@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tencent.weili.dao.SpecialDayDAO">
+
+    <resultMap id="specialDayResultMap" type="com.tencent.weili.entity.SpecialDay">
+        <result property="date" column="date" />
+        <result property="event" column="event" />
+    </resultMap>
+
+    <select id="selectEventByDate" parameterType="java.lang.String" resultType="java.lang.String">
+        SELECT event FROM special_day_table
+        WHERE date = #{date}
+    </select>
+
+    <insert id="insertSpecialDay" useGeneratedKeys="true" parameterType="com.tencent.weili.entity.SpecialDay">
+        INSERT INTO
+        special_day_table(date, event)
+        VALUES
+        (#{date}, #{event})
+    </insert>
+
+</mapper>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.tencent.weili.dao.RecommendDetailDAO">
+
+    <resultMap id="recommendDetailResultMap" type="com.tencent.weili.entity.RecommendDetail">
+        <id property="id" column="id" />
+        <result property="title" column="title" />
+        <result property="kind" column="kind" />
+        <result property="detail" column="detail" />
+        <result property="number" column="number" />
+        <result property="location" column="location" />
+    </resultMap>
+
+    <select id="selectRecommendDetailById" parameterType="java.lang.Integer"
+            resultType="com.tencent.weili.entity.RecommendDetail"
+            resultMap="recommendDetailResultMap">
+        SELECT * FROM recommend_detail_table WHERE id = #{id}
+    </select>
+
+    <insert id="insertRecommendDetail" useGeneratedKeys="true" parameterType="com.tencent.weili.entity.RecommendDetail">
+        INSERT INTO
+        recommend_detail_table(kind, title, detail, number, location)
+        VALUES
+        (#{kind}, #{title}, #{detail}, #{number}, #{location})
+    </insert>
+
+</mapper>
