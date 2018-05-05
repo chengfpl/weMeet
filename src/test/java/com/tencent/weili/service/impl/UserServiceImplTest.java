@@ -47,4 +47,32 @@ public class UserServiceImplTest {
         System.out.println(activityId);
     }
 
+    /*
+     * OK
+     */
+    @Test
+    public void insertParticipation() throws Exception {
+        userService.insertParticipation("001", 9, "4-5");
+    }
+
+    @Test
+    public void getParticipationInDay() throws Exception {
+
+    }
+
+    @Test
+    public void getParticipationInPartDay() throws Exception {
+
+    }
+
+    @Test
+    public void getParticipationInHour() throws Exception {
+
+    }
+
+    @Test
+    public void getParticipationInInterval() throws Exception {
+
+    }
+
 }

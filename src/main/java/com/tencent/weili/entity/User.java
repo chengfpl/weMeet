@@ -4,11 +4,21 @@ import java.util.List;
 
 public class User {
 
+    private Integer id;
+
     private String openId;
 
     private String nickname;
 
     private String avatar;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     private List<Activity> activityList;
 
@@ -47,7 +57,8 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "openId='" + openId + '\'' +
+                "id=" + id +
+                ", openId='" + openId + '\'' +
                 ", nickname='" + nickname + '\'' +
                 ", avatar='" + avatar + '\'' +
                 '}';

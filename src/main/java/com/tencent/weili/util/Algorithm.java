@@ -7,7 +7,7 @@ import java.util.*;
 
 public class Algorithm {
 
-    private static class Pair<K,V>{
+    static class Pair<K,V>{
         K key;
         V value;
         Pair(K key,V value){
@@ -94,15 +94,19 @@ public class Algorithm {
     public static void main(String args[]) {
 
         // 假设数据格式和内容都是符合要求的,此处没做数据检验
-        HashMap<Integer,String> input_ = new HashMap<Integer, String>();
-
-        input_.put(100,"2018-05-02 08:00:00_2018-05-02 10:00:00;2020-10-05 09:00:00_2020-10-05 11:00:00");
-        input_.put(102,"2018-05-02 08:00:00_2018-05-02 10:00:00;2018-05-02 11:00:00_2018-05-02 13:00:00;2018-05-02 12:00:00_2018-05-02 14:00:00");
+        HashMap<Integer,String> input_ = new HashMap<>();
+        // n hour interval
+        input_.put(100,"2018-05-02 07:00:00_2018-05-02 10:00:00;2018-05-02 09:00:00_2018-05-02 13:00:00;2021-10-08 06:00:00_2021-10-08 09:00:00");
+        input_.put(102,"2018-05-02 08:00:00_2018-05-02 11:00:00;2018-05-02 11:00:00_2018-05-02 14:00:00;2018-05-02 12:00:00_2018-05-02 15:00:00");
         System.out.println("Input:");
         System.out.println(input_);
-        HashMap<String ,ArrayList<Integer>> res_two_hour = get_stat_by_two_hour(input_);
-        System.out.println("Two Hour:");
-        System.out.println(res_two_hour);
+        HashMap<String ,ArrayList<Integer>> res_hour = get_stat_by_one_hour(input_);
+        System.out.println("Hour:");
+        System.out.println(res_hour);
+
+        HashMap<String ,ArrayList<Integer>> res_interval = get_stat_by_interval(input_,2);
+        System.out.println("given interval:");
+        System.out.println(res_interval);
 
         HashMap<String ,ArrayList<Integer>> res_day = get_stat_by_one_day(input_);
         System.out.println("Day:");
@@ -112,9 +116,6 @@ public class Algorithm {
         System.out.println("Half:");
         System.out.println(res_half);
 
-        HashMap<String ,ArrayList<Integer>> res_one_hour = get_stat_by_one_hour(input_);
-        System.out.println("One Hour:");
-        System.out.println(res_one_hour);
 
     }
 
@@ -139,21 +140,73 @@ public class Algorithm {
     }
 
 
-    public static HashMap<String,ArrayList<Integer>> get_stat_by_one_hour(HashMap<Integer,String> input_){
+    public static HashMap<String,ArrayList<Integer>> get_stat_by_interval(HashMap<Integer,String> input_,int interval){
+        ArrayList<Pair<TimeSpec,ArrayList<Integer>>> plan_ = _get_discrete_plan(input_);
+        ArrayList<Pair<TimeSpec,HashSet<Integer>>> plan_by_one = new ArrayList<>();
+        for(Pair<TimeSpec,ArrayList<Integer>> p : plan_)
+            plan_by_one.add(new Pair<>(p.key,new HashSet<>(p.value)));
+
+        ArrayList<Pair<TimeSpec,ArrayList<Integer>>> plan_by_interval = new ArrayList<>();
+
+
+        for (int i=0;i<plan_by_one.size();++i){
+            TimeSpec ts = plan_by_one.get(i).key;
+            HashSet<Integer> hs =  plan_by_one.get(i).value;
+            HashSet<Integer> rest = new HashSet<>(hs);
+            int probe = i+1;
+            while(probe<plan_by_one.size()){
+                TimeSpec tp = plan_by_one.get(probe).key;
+                int offset = tp.end.hour - ts.hour;
+                if(offset<interval) {
+                    rest.retainAll(plan_by_one.get(probe).value);
+                }
+                else if(offset == interval){
+                    rest.retainAll(plan_by_one.get(probe).value);
+                    plan_by_interval.add(new Pair<>(
+                            DiscreteTime(ts,ts.hour,ts.hour+interval),
+                            new ArrayList<>(rest)));
+                }
+                if(offset >=interval) break;
+                probe++;
+            }
+
+        }
+
+        return time_spec_to_string(plan_by_interval);
+    }
+
+    private static ArrayList<Pair<TimeSpec,ArrayList<Integer>>> _get_discrete_plan(HashMap<Integer,String> input_){
         ArrayList<TimeSpec> parsed_input = string_to_time_spec(input_);
-        ArrayList<Pair<TimeSpec,ArrayList<Integer>>> plan = get_plan(parsed_input);
+        ArrayList<TimeSpec> parsed_split = new ArrayList<>();
+        for (TimeSpec ts : parsed_input){
+            int delta = ts.end.hour - ts.hour;
+            for (int i = 0;i<delta;++i){
+                TimeSpec start = ts.clone();
+                TimeSpec end = ts.clone();
+                start.hour += i;
+                end.hour = start.hour + 1;
+                start.end = end;
+                parsed_split.add(start);
+            }
+        }
+        Collections.sort(parsed_split);
+        ArrayList<Pair<TimeSpec,ArrayList<Integer>>> plan = get_plan(parsed_split);
+        for (Pair<TimeSpec,ArrayList<Integer>> pair : plan){
+            pair.value = unique(pair.value);
+        }
+        return plan;
+    }
+
+    public static HashMap<String,ArrayList<Integer>> get_stat_by_one_hour(HashMap<Integer,String> input_){
+        ArrayList<Pair<TimeSpec,ArrayList<Integer>>> plan = _get_discrete_plan(input_);
         return time_spec_to_string(plan);
+
     }
 
-    public static HashMap<String,ArrayList<Integer>> get_stat_by_two_hour(HashMap<Integer,String> input_){
-        return get_stat_by_one_hour(input_);
+    private static <T> ArrayList<T> unique(ArrayList<T> arr){
+        HashSet<T> hs = new HashSet<T>(arr);
+        return  new ArrayList<T>(hs);
     }
-
-    private static ArrayList<Integer> unique(ArrayList<Integer> arr){
-        HashSet<Integer> hs = new HashSet<>(arr);
-        return  new ArrayList<>(hs);
-    }
-
     public static HashMap<String,ArrayList<Integer>> get_stat_by_one_day(HashMap<Integer,String> input_) {
         ArrayList<TimeSpec> parsed_input = string_to_time_spec(input_);
         for (TimeSpec ts : parsed_input){

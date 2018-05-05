@@ -12,6 +12,8 @@ public interface UserDAO {
 
     User selectUserByOpenId(String openId);
 
+    User selectUserById(Integer id);
+
     List<User> selectAllUserByActivityId(Integer activityId);
 
 }

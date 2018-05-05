@@ -8,7 +8,7 @@ public class Participation {
 
     private String creatorId;
 
-    private String activityId;
+    private Integer activityId;
 
     private boolean flag;
 
@@ -52,11 +52,11 @@ public class Participation {
         this.creatorId = creatorId;
     }
 
-    public String getActivityId() {
+    public Integer getActivityId() {
         return activityId;
     }
 
-    public void setActivityId(String activityId) {
+    public void setActivityId(Integer activityId) {
         this.activityId = activityId;
     }
 

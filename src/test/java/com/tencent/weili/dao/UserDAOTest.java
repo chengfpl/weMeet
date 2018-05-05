@@ -24,10 +24,11 @@ public class UserDAOTest {
     @Test
     public void insertUser() throws Exception {
         User user = new User();
-        user.setOpenId("003");
-        user.setNickname("dakun");
+        user.setOpenId("001klj4l");
+        user.setNickname("wukldjf");
         user.setAvatar("www.tencent.com");
         int result = userDAO.insertUser(user);
+        System.out.println(user.getId());
         assertEquals(1, result);
     }
 
@@ -63,6 +64,15 @@ public class UserDAOTest {
         user.setAvatar("www.fff");
         int result = userDAO.updateUser(user);
         assertEquals(1, result);
+    }
+
+    /*
+     * OK
+     */
+    @Test
+    public void selectUserById() throws Exception {
+        User user = userDAO.selectUserById(5);
+        System.out.println(user);
     }
 
 }

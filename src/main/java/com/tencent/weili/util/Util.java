@@ -51,6 +51,33 @@ public class Util {
     }
 
     /*
+     * 类型转换
+     * 2018-05-02 08:00:00_2018-05-02 11:00:00 ---> 2018-05-02_0
+     */
+    public static String transform(String time) {
+        if (time.contains("00:00:00") && time.contains("08:00:00")) {
+            return time.split("_")[0].split(" ") + "_1";
+        }
+        if (time.contains("08:00:00") && time.contains("12:00:00")) {
+            return time.split("_")[0].split(" ") + "_2";
+        }
+        if (time.contains("12:00:00") && time.contains("14:00:00")) {
+            return time.split("_")[0].split(" ") + "_3";
+        }
+        if (time.contains("14:00:00") && time.contains("18:00:00")) {
+            return time.split("_")[0].split(" ") + "_4";
+        }
+        if (time.contains("18:00:00") && time.contains("24:00:00")) {
+            return time.split("_")[0].split(" ") + "_5";
+        }
+        return time.split("_")[0].split(" ") + "_0";
+    }
+
+    public static boolean checkTime(String time) {
+        return time.length() == 39;
+    }
+
+    /*
      * 暂时未开放这个接口
      */
     public static String decode(String encryptedData, String sessionKey, String iv) {

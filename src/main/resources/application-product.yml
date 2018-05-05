@@ -1,3 +1,12 @@
+server:
+  servlet:
+    context-path: /weili
+  port: 8080
+  tomcat:
+    protocol-header: x-forwarded-proto
+  use-forward-headers: true
+  address: 127.0.0.1
+
 url:
   address: https://api.weixin.qq.com/sns/jscode2session
   appid: wx52a0d060f49fb61c

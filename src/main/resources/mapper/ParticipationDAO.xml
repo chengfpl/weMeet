@@ -43,4 +43,19 @@
         (#{userId}, #{activityId}, #{creatorId}, #{time}, #{type}, #{flag})
     </insert>
 
+    <select id="selectParticipationByOpenIdAndActivityId"
+            resultType="com.tencent.weili.entity.Participation"
+            resultMap="participationResultMap">
+        SELECT * FROM user_activity_table
+        WHERE user_id = #{userId}
+        AND activity_id = #{activityId}
+    </select>
+
+    <update id="updateParticipationByOpenIdAndActivityId">
+        UPDATE user_activity_table
+        set time = #{time}
+        WHERE user_id = #{userId}
+        AND activity_id = #{activityId}
+    </update>
+
 </mapper>

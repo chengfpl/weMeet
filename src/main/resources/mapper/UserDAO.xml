@@ -6,6 +6,7 @@
 <mapper namespace="com.tencent.weili.dao.UserDAO">
 
     <resultMap id="userResultMap" type="com.tencent.weili.entity.User">
+        <id property="id" column="id" />
         <result property="openId" column="open_id" />
         <result property="nickname" column="nickname" />
         <result property="avatar" column="avatar" />
@@ -41,7 +42,12 @@
         WHERE open_id = #{openId}
     </select>
 
-    <insert id="insertUser" useGeneratedKeys="true" parameterType="com.tencent.weili.entity.User">
+    <select id="selectUserById" parameterType="java.lang.Integer" resultType="com.tencent.weili.entity.User" resultMap="userResultMap">
+        SELECT * FROM user_table
+        WHERE id = #{id}
+    </select>
+
+    <insert id="insertUser" keyProperty="id" useGeneratedKeys="true" parameterType="com.tencent.weili.entity.User">
         INSERT INTO
         user_table(open_id, nickname, avatar)
         VALUES

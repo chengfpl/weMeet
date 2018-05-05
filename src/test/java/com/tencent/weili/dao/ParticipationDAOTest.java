@@ -47,12 +47,30 @@ public class ParticipationDAOTest {
     public void insertParticipation() throws Exception {
         Participation participation = new Participation();
         participation.setUserId("008");
-        participation.setActivityId("9");
+        participation.setActivityId(1);
         participation.setFlag(true);
         participation.setType(1);
         participation.setCreatorId("009");
         participation.setTime("3-4;4-5;5-6");
         int result = participationDAO.insertParticipation(participation);
+        assertEquals(1, result);
+    }
+
+    /*
+     * OK
+     */
+    @Test
+    public void selectParticipationByOpenIdAndActivityId() throws Exception {
+        Participation participation = participationDAO.selectParticipationByOpenIdAndActivityId("001", 3);
+        System.out.println(participation);
+    }
+
+    /*
+     * OK
+     */
+    @Test
+    public void updateParticipationByOpenIdAndActivityId() throws Exception {
+        int result = participationDAO.updateParticipationByOpenIdAndActivityId("001", 3, "1-2");
         assertEquals(1, result);
     }
 
