@@ -17,7 +17,7 @@ import java.util.Base64;
 public class Util {
 
     /*
-     *
+     * 从微信服务器获取用户的openid与session_key
      */
     public static String getUserWXInfo(String url){
         String result = "";
@@ -50,6 +50,9 @@ public class Util {
         return result;
     }
 
+    /*
+     * 暂时未开放这个接口
+     */
     public static String decode(String encryptedData, String sessionKey, String iv) {
         byte[] dataByte = Base64.getDecoder().decode(encryptedData);
         // 加密秘钥

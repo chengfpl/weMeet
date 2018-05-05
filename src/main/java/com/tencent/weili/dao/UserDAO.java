@@ -8,6 +8,8 @@ public interface UserDAO {
 
     int insertUser(User user);
 
+    int updateUser(User user);
+
     User selectUserByOpenId(String openId);
 
     List<User> selectAllUserByActivityId(Integer activityId);

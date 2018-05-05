@@ -47,6 +47,13 @@
         VALUES
         (#{openId}, #{nickname}, #{avatar})
     </insert>
+    
+    <update id="updateUser" parameterType="com.tencent.weili.entity.User">
+        UPDATE user_table
+        SET nickname = #{nickname},
+            avatar = #{avatar}
+        WHERE open_id = #{openId}
+    </update>
 
 
 </mapper>

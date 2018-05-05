@@ -52,4 +52,17 @@ public class UserDAOTest {
         }
     }
 
+    /*
+     * OK
+     */
+    @Test
+    public void updateUser() throws Exception {
+        User user = new User();
+        user.setOpenId("001");
+        user.setNickname("chen");
+        user.setAvatar("www.fff");
+        int result = userDAO.updateUser(user);
+        assertEquals(1, result);
+    }
+
 }

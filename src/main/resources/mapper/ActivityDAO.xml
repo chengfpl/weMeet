@@ -47,7 +47,7 @@
         WHERE id = #{id}
     </delete>
 
-    <insert id="insertActivity" useGeneratedKeys="true" parameterType="com.tencent.weili.entity.Activity">
+    <insert id="insertActivity" keyProperty="id" useGeneratedKeys="true" parameterType="com.tencent.weili.entity.Activity">
       INSERT INTO
       activity_table(name, description, count, location, time_type, start_time, end_time, deadline, creator)
       VALUES
