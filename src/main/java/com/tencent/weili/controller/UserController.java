@@ -90,18 +90,21 @@ public class UserController {
     }
 
     @GetMapping(value = "/participation/partofday")
-    public Result<Map<String, List<User>>> getParticipationInPartDay() {
-        return null;
+    public Result<Map<String, List<User>>> getParticipationInPartDay(@RequestParam(required = true, value = "acitvityId") Integer activityId) {
+        Map<String, List<User>> map = userService.getParticipationInPartDay(activityId);
+        return new Result<Map<String, List<User>>>(true, map);
     }
 
     @GetMapping(value = "/participation/hour")
-    public Result<Map<String, List<User>>> getParticipationInHour() {
-        return null;
+    public Result<Map<String, List<User>>> getParticipationInHour(@RequestParam(required = true, value = "acitvityId") Integer activityId) {
+        Map<String, List<User>> map = userService.getParticipationInHour(activityId);
+        return new Result<Map<String, List<User>>>(true, map);
     }
 
     @GetMapping(value = "/participation/interval")
-    public Result<Map<String, List<User>>> getParticipationInInterval() {
-        return null;
+    public Result<Map<String, List<User>>> getParticipationInInterval(@RequestParam(required = true, value = "acitvityId") Integer activityId) {
+        Map<String, List<User>> map = userService.getParticipationInInterval(activityId);
+        return new Result<Map<String, List<User>>>(true, map);
     }
 
 }

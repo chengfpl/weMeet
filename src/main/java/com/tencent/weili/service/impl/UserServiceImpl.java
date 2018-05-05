@@ -138,7 +138,7 @@ public class UserServiceImpl implements UserService {
             for (Integer id : userIdList) {
                 userList.add(userDAO.selectUserById(id));
             }
-            result.put(key, userList);
+            result.put(Util.transform(key), userList);
         });
         return result;
     }
@@ -161,7 +161,7 @@ public class UserServiceImpl implements UserService {
             for (Integer id : userIdList) {
                 userList.add(userDAO.selectUserById(id));
             }
-            result.put(Util.transform(key), userList);
+            result.put(key, userList);
         }
         return result;
     }

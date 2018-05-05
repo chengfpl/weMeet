@@ -9,8 +9,8 @@ server:
 
 url:
   address: https://api.weixin.qq.com/sns/jscode2session
-  appid: wx52a0d060f49fb61c
-  secret: 8fe5bcea6652c325aa2c6c040fe96828
+  appid: wx2be0b5437ef8e47d
+  secret: d160e9b92f45a12f7f2cc7e2a0f0c5fd
   grant_type: authorization_code
 
 spring:
