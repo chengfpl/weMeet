@@ -1,7 +1,11 @@
 package com.tencent.weili.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.List;
 
+@JsonIgnoreProperties(value = "activityList")
 public class User {
 
     private Integer id;
