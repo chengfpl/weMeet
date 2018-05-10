@@ -34,8 +34,8 @@ public class UserServiceImplTest {
     @Test
     public void insertActivity() throws Exception {
         Activity activity = new Activity();
-        activity.setTimeType(1);
-        activity.setDescription("world");
+        activity.setTimeType(2);
+        activity.setDescription("hello");
         activity.setLocation("bao fu si");
         activity.setStartTime(new Date());
         activity.setEndTime(new Date());

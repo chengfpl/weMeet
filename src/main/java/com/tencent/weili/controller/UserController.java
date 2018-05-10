@@ -57,6 +57,7 @@ public class UserController {
         activity.setDescription(request.getParameter("description"));
         activity.setLocation(request.getParameter("location"));
         activity.setCreator(request.getParameter("openId"));
+        activity.setCount(0);
         activity.setTimeType(Integer.parseInt(request.getParameter("timeType")));
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         activity.setStartTime(simpleDateFormat.parse(request.getParameter("startTime")));
