@@ -94,27 +94,27 @@ public class UserController {
     }
 
     @GetMapping(value = "/participation/day")
-    public Result<Map<String, List<User>>> getParticipationInDay(@RequestParam(required = true, value = "activityId") Integer activityId) {
+    public Result<List<Map.Entry<String, List<User>>>> getParticipationInDay(@RequestParam(required = true, value = "activityId") Integer activityId) {
         Map<String, List<User>> map = userService.getParticipationInDay(activityId);
-        return new Result<Map<String, List<User>>>(true, map);
+        return new Result<List<Map.Entry<String, List<User>>>>(true, Util.sort(map));
     }
 
     @GetMapping(value = "/participation/partofday")
-    public Result<Map<String, List<User>>> getParticipationInPartDay(@RequestParam(required = true, value = "activityId") Integer activityId) {
+    public Result<List<Map.Entry<String, List<User>>>> getParticipationInPartDay(@RequestParam(required = true, value = "activityId") Integer activityId) {
         Map<String, List<User>> map = userService.getParticipationInPartDay(activityId);
-        return new Result<Map<String, List<User>>>(true, map);
+        return new Result<List<Map.Entry<String, List<User>>>>(true, Util.sort(map));
     }
 
     @GetMapping(value = "/participation/hour")
-    public Result<Map<String, List<User>>> getParticipationInHour(@RequestParam(required = true, value = "activityId") Integer activityId) {
+    public Result<List<Map.Entry<String, List<User>>>> getParticipationInHour(@RequestParam(required = true, value = "activityId") Integer activityId) {
         Map<String, List<User>> map = userService.getParticipationInHour(activityId);
-        return new Result<Map<String, List<User>>>(true, map);
+        return new Result<List<Map.Entry<String, List<User>>>>(true, Util.sort(map));
     }
 
     @GetMapping(value = "/participation/interval")
-    public Result<Map<String, List<User>>> getParticipationInInterval(@RequestParam(required = true, value = "activityId") Integer activityId) {
+    public Result<List<Map.Entry<String, List<User>>>> getParticipationInInterval(@RequestParam(required = true, value = "activityId") Integer activityId) {
         Map<String, List<User>> map = userService.getParticipationInInterval(activityId);
-        return new Result<Map<String, List<User>>>(true, map);
+        return new Result<List<Map.Entry<String, List<User>>>>(true, Util.sort(map));
     }
 
     /*
@@ -137,6 +137,32 @@ public class UserController {
         map.put(date1, list1);
         map.put(date2, list2);
         return new Result<Map<String, List<User>>>(true, map);
+    }
+
+    @GetMapping(value = "/temporary/participation/interval")
+    public Result<List<Map.Entry<String, List<User>>>> getTemporaryParticipationInInterval(@RequestParam(required = true, value = "activityId") Integer activityId) {
+
+        List<User> list1 = new ArrayList<>();
+        list1.add(userService.selectUser("001"));
+
+        List<User> list2 = new ArrayList<>();
+        list2.add(userService.selectUser("002"));
+        list2.add(userService.selectUser("003"));
+
+        List<User> list3 = new ArrayList<>();
+        list3.add(userService.selectUser("001"));
+        list3.add(userService.selectUser("002"));
+        list3.add(userService.selectUser("003"));
+
+        String date1 = "2018-05-02 09:00:00_2018-05-02 11:00:00";
+        String date2 = "2018-05-03 00:00:00_2018-05-03 02:00:00";
+        String date3 = "2018-05-04 00:00:00_2018-05-04 02:00:00";
+
+        Map<String, List<User>> map = new HashMap<>();
+        map.put(date1, list1);
+        map.put(date2, list2);
+        map.put(date3, list3);
+        return new Result<List<Map.Entry<String, List<User>>>>(true, Util.sort(map));
     }
 
 }

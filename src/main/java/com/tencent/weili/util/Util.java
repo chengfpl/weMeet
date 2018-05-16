@@ -1,5 +1,6 @@
 package com.tencent.weili.util;
 
+import com.tencent.weili.entity.User;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
@@ -11,8 +12,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.security.AlgorithmParameters;
 import java.security.Security;
-import java.util.Arrays;
-import java.util.Base64;
+import java.util.*;
 
 public class Util {
 
@@ -113,6 +113,13 @@ public class Util {
             e.printStackTrace();
         }
         return null;
+    }
+
+    public static List<Map.Entry<String, List<User>>> sort(Map<String, List<User>> map) {
+        List<Map.Entry<String, List<User>>> list=new ArrayList<>();
+        list.addAll(map.entrySet());
+        Collections.sort(list, (o1, o2) -> o2.getValue().size() - o1.getValue().size());
+        return list;
     }
 
 }

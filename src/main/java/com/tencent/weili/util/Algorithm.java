@@ -231,7 +231,7 @@ public class Algorithm {
         return tmp_start;
     }
 
-    static void AddTime(TimeSpec cmp,ArrayList<TimeSpec> target){
+    static void AddTime(TimeSpec cmp,ArrayList<TimeSpec> target) {
 
         if (cmp.hour < 8) {
             target.add(DiscreteTime(cmp, 0, 8));
