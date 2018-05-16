@@ -74,7 +74,8 @@ public class Util {
     }
 
     public static boolean checkTime(String time) {
-        return time.length() == 39;
+        //return time.length() == 39;
+        return true;
     }
 
     /*

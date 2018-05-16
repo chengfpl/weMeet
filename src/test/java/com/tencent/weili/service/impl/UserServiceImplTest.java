@@ -1,6 +1,8 @@
 package com.tencent.weili.service.impl;
 
+import com.tencent.weili.dao.ActivityDAO;
 import com.tencent.weili.entity.Activity;
+import com.tencent.weili.entity.User;
 import com.tencent.weili.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -54,6 +56,23 @@ public class UserServiceImplTest {
     public void insertParticipation() throws Exception {
         userService.insertParticipation("001", 9, "4-5");
     }
+
+    /*
+     * OK
+     */
+    @Test
+    public void selectActivity() throws Exception {
+        Activity activity = userService.selectActivity(9);
+        System.out.println(activity);
+    }
+
+    @Test
+    public void selectUser() throws Exception {
+        User user = userService.selectUser("001");
+        System.out.println(user);
+    }
+
+
 
     @Test
     public void getParticipationInDay() throws Exception {

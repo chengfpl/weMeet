@@ -26,4 +26,8 @@ public interface UserService {
 
     List<Activity> selectAllActivity(String openId);
 
+    Activity selectActivity(Integer activityId);
+
+    User selectUser(String openId);
+
 }

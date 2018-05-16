@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -75,36 +77,65 @@ public class UserController {
         return result;
     }
 
+    @GetMapping(value = "/select/activity")
+    public Result<Activity> selectActivity(@RequestParam(required = true, value = "activityId") Integer activityId) {
+        Activity activity = userService.selectActivity(activityId);
+        Result<Activity> result = new Result<Activity>(true, activity);
+        return result;
+    }
+
     @PostMapping(value = "/create/participation")
     public Result<Integer> insertParticipation(
             @RequestParam(required = true, value = "openId") String openId,
-            @RequestParam(required = true, value = "acitvityId") Integer activityId,
+            @RequestParam(required = true, value = "activityId") Integer activityId,
             @RequestParam(required = true, value = "time") String time) {
         int tag = userService.insertParticipation(openId, activityId, time);
         return new Result<Integer>(true, tag);
     }
 
     @GetMapping(value = "/participation/day")
-    public Result<Map<String, List<User>>> getParticipationInDay(@RequestParam(required = true, value = "acitvityId") Integer activityId) {
+    public Result<Map<String, List<User>>> getParticipationInDay(@RequestParam(required = true, value = "activityId") Integer activityId) {
         Map<String, List<User>> map = userService.getParticipationInDay(activityId);
         return new Result<Map<String, List<User>>>(true, map);
     }
 
     @GetMapping(value = "/participation/partofday")
-    public Result<Map<String, List<User>>> getParticipationInPartDay(@RequestParam(required = true, value = "acitvityId") Integer activityId) {
+    public Result<Map<String, List<User>>> getParticipationInPartDay(@RequestParam(required = true, value = "activityId") Integer activityId) {
         Map<String, List<User>> map = userService.getParticipationInPartDay(activityId);
         return new Result<Map<String, List<User>>>(true, map);
     }
 
     @GetMapping(value = "/participation/hour")
-    public Result<Map<String, List<User>>> getParticipationInHour(@RequestParam(required = true, value = "acitvityId") Integer activityId) {
+    public Result<Map<String, List<User>>> getParticipationInHour(@RequestParam(required = true, value = "activityId") Integer activityId) {
         Map<String, List<User>> map = userService.getParticipationInHour(activityId);
         return new Result<Map<String, List<User>>>(true, map);
     }
 
     @GetMapping(value = "/participation/interval")
-    public Result<Map<String, List<User>>> getParticipationInInterval(@RequestParam(required = true, value = "acitvityId") Integer activityId) {
+    public Result<Map<String, List<User>>> getParticipationInInterval(@RequestParam(required = true, value = "activityId") Integer activityId) {
         Map<String, List<User>> map = userService.getParticipationInInterval(activityId);
+        return new Result<Map<String, List<User>>>(true, map);
+    }
+
+    /*
+     * for temporary test
+     */
+    @GetMapping(value = "/temporary/participation/day")
+    public Result<Map<String, List<User>>> getTemporaryParticipationInDay(@RequestParam(required = true, value = "activityId") Integer activityId) {
+        Map<String, List<User>> map = new HashMap<>();
+        List<User> list1 = new ArrayList<>();
+        System.out.println("debug : -------------->");
+        list1.add(userService.selectUser("001"));
+        list1.add(userService.selectUser("002"));
+        List<User> list2 = new ArrayList<>();
+        list2.add(userService.selectUser("002"));
+        list2.add(userService.selectUser("003"));
+        System.out.println(list1);
+        System.out.println(list2);
+        String date1 = "2018-05-02 00:00:00_2018-05-02 24:00:00";
+        String date2 = "2018-05-02 00:00:00_2018-05-03 24:00:00";
+        map.put(date1, list1);
+        map.put(date2, list2);
         return new Result<Map<String, List<User>>>(true, map);
     }
 

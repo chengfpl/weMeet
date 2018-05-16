@@ -196,4 +196,20 @@ public class UserServiceImpl implements UserService {
         return activities;
     }
 
+    @Override
+    public Activity selectActivity(Integer activityId) {
+        if (activityId == null || activityId <= 0) {
+            throw new RuntimeException("id不能为空或是小于1");
+        }
+        return activityDAO.selectActivityById(activityId);
+    }
+
+    @Override
+    public User selectUser(String openId) {
+        if (openId == null) {
+            throw new RuntimeException("openId不能为空");
+        }
+        System.out.println("here");
+        return userDAO.selectUserByOpenId(openId);
+    }
 }
