@@ -136,6 +136,7 @@ public class UserServiceImpl implements UserService {
             for (Integer id : userIdList) {
                 userList.add(userDAO.selectUserById(id));
             }
+            //System.out.println("after transform : " + Util.transform(key));
             result.put(Util.transform(key), userList);
         });
         return result;
@@ -175,7 +176,9 @@ public class UserServiceImpl implements UserService {
         for (Participation participation : list) {
             map.put(participation.getUser().getId(), participation.getTime());
         }
+        //System.out.println(type);
         Map<String, ArrayList<Integer>> res = Algorithm.get_stat_by_interval(map, type);
+        Util.print(res);
         Map<String, List<User>> result = new HashMap<>();
         res.keySet().forEach(key -> {
             List<Integer> userIdList = res.get(key);

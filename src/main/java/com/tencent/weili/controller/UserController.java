@@ -93,6 +93,9 @@ public class UserController {
         return new Result<Integer>(true, tag);
     }
 
+    /*
+     * OK
+     */
     @GetMapping(value = "/participation/day")
     public Result<List<Map.Entry<String, List<User>>>> getParticipationInDay(@RequestParam(required = true, value = "activityId") Integer activityId) {
         Map<String, List<User>> map = userService.getParticipationInDay(activityId);
@@ -105,6 +108,9 @@ public class UserController {
         return new Result<List<Map.Entry<String, List<User>>>>(true, Util.sort(map));
     }
 
+    /*
+     * OK
+     */
     @GetMapping(value = "/participation/hour")
     public Result<List<Map.Entry<String, List<User>>>> getParticipationInHour(@RequestParam(required = true, value = "activityId") Integer activityId) {
         Map<String, List<User>> map = userService.getParticipationInHour(activityId);

@@ -55,22 +55,23 @@ public class Util {
      * 2018-05-02 08:00:00_2018-05-02 11:00:00 ---> 2018-05-02_0
      */
     public static String transform(String time) {
+        //System.out.println(time);
         if (time.contains("00:00:00") && time.contains("08:00:00")) {
-            return time.split("_")[0].split(" ") + "_1";
+            return time.split("_")[0].split(" ")[0] + "_1";
         }
         if (time.contains("08:00:00") && time.contains("12:00:00")) {
-            return time.split("_")[0].split(" ") + "_2";
+            return time.split("_")[0].split(" ")[0] + "_2";
         }
         if (time.contains("12:00:00") && time.contains("14:00:00")) {
-            return time.split("_")[0].split(" ") + "_3";
+            return time.split("_")[0].split(" ")[0] + "_3";
         }
         if (time.contains("14:00:00") && time.contains("18:00:00")) {
-            return time.split("_")[0].split(" ") + "_4";
+            return time.split("_")[0].split(" ")[0] + "_4";
         }
         if (time.contains("18:00:00") && time.contains("24:00:00")) {
-            return time.split("_")[0].split(" ") + "_5";
+            return time.split("_")[0].split(" ")[0] + "_5";
         }
-        return time.split("_")[0].split(" ") + "_0";
+        return time.split("_")[0].split(" ")[0] + "_0";
     }
 
     public static boolean checkTime(String time) {
@@ -120,6 +121,12 @@ public class Util {
         list.addAll(map.entrySet());
         Collections.sort(list, (o1, o2) -> o2.getValue().size() - o1.getValue().size());
         return list;
+    }
+
+    public static void print(Map<String, ArrayList<Integer>> map) {
+        for (String str : map.keySet()) {
+            System.out.println("str : " + str + " list : " + map.get(str));
+        }
     }
 
 }
