@@ -1,5 +1,6 @@
 package com.tencent.weili.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tencent.weili.dto.Result;
 import com.tencent.weili.entity.Activity;
 import com.tencent.weili.entity.URLInfo;

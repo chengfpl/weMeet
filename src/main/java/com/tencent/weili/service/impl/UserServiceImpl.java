@@ -33,6 +33,9 @@ public class UserServiceImpl implements UserService {
         if (openId == null || nickname == null || avatar == null) {
             throw new RuntimeException("用户信息不能有null项");
         }
+        if (openId.equals("")) {
+            throw new RuntimeException("用户的openId不能为空字符");
+        }
         User user = new User();
         user.setOpenId(openId);
         user.setNickname(nickname);
@@ -68,6 +71,9 @@ public class UserServiceImpl implements UserService {
                 || activityId == null
                 || time == null) {
             throw new RuntimeException("活动参与不能有null项");
+        }
+        if ("".equals(openId) || "".equals(time)) {
+            throw new RuntimeException("openId或是时间不能为空");
         }
         if (!Util.checkTime(time)) {
             throw new RuntimeException("时间格式应该为 yyyy-MM-dd HH:mm:ss");

@@ -1,8 +1,5 @@
 package com.tencent.weili.util;
 
-/*
- * Finished by lifang
- */
 import java.util.*;
 
 public class Algorithm {
@@ -95,16 +92,20 @@ public class Algorithm {
 
         // 假设数据格式和内容都是符合要求的,此处没做数据检验
         HashMap<Integer,String> input_ = new HashMap<>();
-        // n hour interval
-        input_.put(100,"2018-05-02 07:00:00_2018-05-02 10:00:00;2018-05-02 09:00:00_2018-05-02 13:00:00;2021-10-08 06:00:00_2021-10-08 09:00:00");
-        input_.put(102,"2018-05-02 08:00:00_2018-05-02 11:00:00;2018-05-02 11:00:00_2018-05-02 14:00:00;2018-05-02 12:00:00_2018-05-02 15:00:00");
+        // 3 hour interval
+        //input_.put(100,"2018-05-02 07:00:00_2018-05-02 10:00:00;2018-05-02 09:00:00_2018-05-02 13:00:00;2021-10-08 06:00:00_2021-10-08 09:00:00");
+        //input_.put(102,"2018-05-02 08:00:00_2018-05-02 11:00:00;2018-05-02 11:00:00_2018-05-02 14:00:00;2018-05-02 12:00:00_2018-05-02 15:00:00");
+        //input_.put(103,"2018-05-02 08:00:00_2018-05-02 14:00:00");
+        //input_.put(104,"2018-05-02 00:00:00_2018-05-02 11:00:00");
+        //input_.put(105,"2018-05-02 09:00:00_2018-05-02 17:00:00");
+        input_.put(106,"2018-05-02 00:00:00_2018-05-02 24:00:00");
         System.out.println("Input:");
         System.out.println(input_);
         HashMap<String ,ArrayList<Integer>> res_hour = get_stat_by_one_hour(input_);
         System.out.println("Hour:");
         System.out.println(res_hour);
 
-        HashMap<String ,ArrayList<Integer>> res_interval = get_stat_by_interval(input_,2);
+        HashMap<String ,ArrayList<Integer>> res_interval = get_stat_by_interval(input_,3);
         System.out.println("given interval:");
         System.out.println(res_interval);
 
@@ -230,8 +231,8 @@ public class Algorithm {
         tmp_start.end = tmp_end;
         return tmp_start;
     }
-
-    static void AddTime(TimeSpec cmp,ArrayList<TimeSpec> target) {
+    /*
+    static void AddTime(TimeSpec cmp,ArrayList<TimeSpec> target){
 
         if (cmp.hour < 8) {
             target.add(DiscreteTime(cmp, 0, 8));
@@ -252,39 +253,37 @@ public class Algorithm {
         }
 
     }
+    */
 
-    static void AddTime_if_inclusive(TimeSpec cmp,ArrayList<TimeSpec> target){
+    static void AddTime_if_inclusive(TimeSpec start,TimeSpec end, ArrayList<TimeSpec> target){
         //早上
-        if (cmp.hour <= 8) {
-            target.add(DiscreteTime(cmp, 0, 8));
+        if (start.hour <8) {
+            target.add(DiscreteTime(start, 0, 8));
         }
-        //上午
-        else if (cmp.hour <= 12) {
-            target.add(DiscreteTime(cmp, 8, 12));
+        if (end.hour<=8) return ;
+        if (start.hour <= 12) {
+            target.add(DiscreteTime(start, 8, 12));
         }
-        //中午
-        else if (cmp.hour <= 14) {
-            target.add(DiscreteTime(cmp, 12, 14));
+        if(end.hour<=12) return ;
+        if (start.hour <= 14) {
+            target.add(DiscreteTime(start, 12, 14));
         }
-        //下午
-        else if (cmp.hour <= 18) {
-            target.add(DiscreteTime(cmp, 14, 18));
+        if(end.hour<=14) return ;
+        if (start.hour<=18){
+            target.add(DiscreteTime(start,14,18));
         }
-        //晚上
-        else {
-            target.add(DiscreteTime(cmp, 18, 24));
-        }
+        if(end.hour<=18) return ;
+        target.add(DiscreteTime(start,18,24));
     }
 
     public static HashMap<String,ArrayList<Integer>> get_stat_by_half_day(HashMap<Integer,String> input_) {
         ArrayList<TimeSpec> parsed_input = string_to_time_spec(input_);
         ArrayList<TimeSpec> parsed_target = new ArrayList<>();
         for (TimeSpec ts : parsed_input){
-            TimeSpec start = ts;
-            TimeSpec end = ts.end;
-            AddTime(start,parsed_target);
+            //TimeSpec end = ts.end;
+            //AddTime(start,parsed_target);
             //如果时间是闭区间[08:00:00-10:00:00] 用addTime_if_inclusive, 如果是左闭右开区间[08:00:00-09:59:59] 用addTime
-            AddTime_if_inclusive(end,parsed_target);
+            AddTime_if_inclusive(ts,ts.end,parsed_target);
         }
         ArrayList<Pair<TimeSpec,ArrayList<Integer>>> plan = get_plan(parsed_target);
         for (Pair<TimeSpec,ArrayList<Integer>> pair : plan){
@@ -294,6 +293,7 @@ public class Algorithm {
     }
     // 主要算法
     private static ArrayList<Pair<TimeSpec,ArrayList<Integer>>>  get_plan( ArrayList<TimeSpec> input){
+        Collections.sort(input);
         int index = 0;
         ArrayList<Pair<TimeSpec,ArrayList<Integer>>> ret = new ArrayList<>();
         while(index<input.size()){
