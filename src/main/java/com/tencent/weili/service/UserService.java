@@ -30,4 +30,6 @@ public interface UserService {
 
     User selectUser(String openId);
 
+    String deleteActivity(String openId, Integer activityId) throws RuntimeException;
+
 }

@@ -124,6 +124,13 @@ public class UserController {
         return new Result<List<Map.Entry<String, List<User>>>>(true, Util.sort(map));
     }
 
+    @GetMapping(value = "/activity/delete")
+    public Result<String> deleteActivity(@RequestParam(required = true, value = "activityId") Integer activityId,
+                                         @RequestParam(required = true, value = "openId") String openId) {
+        String msg = userService.deleteActivity(openId, activityId);
+        return new Result<String>(true, msg, "");
+    }
+
     /*
      * for temporary test
      */

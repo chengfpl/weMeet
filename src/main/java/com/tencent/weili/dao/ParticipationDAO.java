@@ -1,5 +1,6 @@
 package com.tencent.weili.dao;
 
+import com.tencent.weili.entity.Activity;
 import com.tencent.weili.entity.Participation;
 import org.apache.ibatis.annotations.Param;
 
@@ -16,7 +17,8 @@ public interface ParticipationDAO {
     /*
      * 创建者删除某个活动
      */
-    int deleteByCreatorId(String creatorId);
+    int deleteByOpenIdAndActivityId(@Param("userId") String userId,
+                                    @Param("activityId") Integer activityId);
 
     /*
      * 插入活动
@@ -35,5 +37,7 @@ public interface ParticipationDAO {
     int updateParticipationByOpenIdAndActivityId(@Param("userId") String userId,
                                                  @Param("activityId") Integer activityId,
                                                  @Param("time") String time);
+
+    int deleteByActivityId(Integer activityId);
 
 }

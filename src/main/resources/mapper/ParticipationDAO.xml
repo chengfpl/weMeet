@@ -31,9 +31,10 @@
         WHERE activity_id = #{activityId}
     </select>
 
-    <delete id="deleteByCreatorId" parameterType="java.lang.String">
+    <delete id="deleteByOpenIdAndActivityId">
         DELETE FROM user_activity_table
-        WHERE creator_id = #{creatorId}
+        WHERE user_id = #{userId}
+        AND activity_id = #{activityId}
     </delete>
 
     <insert id="insertParticipation" useGeneratedKeys="true" parameterType="com.tencent.weili.entity.Participation">
@@ -57,5 +58,10 @@
         WHERE user_id = #{userId}
         AND activity_id = #{activityId}
     </update>
+
+    <delete id="deleteByActivityId" parameterType="java.lang.Integer">
+        DELETE FROM user_activity_table
+        WHERE activity_id = #{activityId}
+    </delete>
 
 </mapper>

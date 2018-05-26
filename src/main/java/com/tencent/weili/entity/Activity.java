@@ -21,6 +21,8 @@ public class Activity {
 
     private Integer count;
 
+    private Integer flag;
+
     private String location;
 
     private Date startTime;
@@ -119,6 +121,14 @@ public class Activity {
         this.deadline = deadline;
     }
 
+    public Integer getFlag() {
+        return flag;
+    }
+
+    public void setFlag(Integer flag) {
+        this.flag = flag;
+    }
+
     @Override
     public String toString() {
         return "Activity{" +
@@ -128,6 +138,7 @@ public class Activity {
                 ", timeType=" + timeType +
                 ", description='" + description + '\'' +
                 ", count=" + count +
+                ", flag=" + flag +
                 ", location='" + location + '\'' +
                 ", startTime=" + startTime +
                 ", endTime=" + endTime +

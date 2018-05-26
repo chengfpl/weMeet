@@ -24,9 +24,9 @@ public class ActivityDAOTest {
     * OK
      */
     @Test
-    public void deleteActivity() throws Exception {
-        int result = activityDAO.deleteActivity(2);
-        //assertEquals(1, result);
+    public void deleteActivityById() throws Exception {
+        int result = activityDAO.deleteActivityById(16);
+        assertEquals(1, result);
     }
 
     /*

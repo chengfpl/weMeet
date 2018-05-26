@@ -219,4 +219,24 @@ public class UserServiceImpl implements UserService {
         System.out.println("here");
         return userDAO.selectUserByOpenId(openId);
     }
+
+    @Transactional
+    @Override
+    public String deleteActivity(String openId, Integer activityId) throws RuntimeException {
+        if (openId == null || activityId == null || openId.equals("")) {
+            throw new RuntimeException("openId或activityId不能为空");
+        }
+        Activity activity = activityDAO.selectActivityById(activityId);
+        if (openId.equals(activity.getCreator())) { //如果是活动创建人删除活动
+            activityDAO.deleteActivityById(activityId); //活动标志置为0
+            activityDAO.updateActivityCount(activity.getId(), 0); //活动人数置0
+            participationDAO.deleteByActivityId(activityId); //所有活动参与情况全部删除
+        } else { //普通参与者删除活动
+            if (participationDAO.deleteByOpenIdAndActivityId(openId, activityId) == 1) { //删除一个活动参与
+                activityDAO.updateActivityCount(activity.getId(), activity.getCount() - 1); //活动人数减1
+            }
+        }
+        return "activity delete succeed!!!";
+    }
+
 }

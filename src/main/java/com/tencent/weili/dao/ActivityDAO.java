@@ -8,7 +8,7 @@ public interface ActivityDAO {
 
     int insertActivity(Activity activity);
 
-    int deleteActivity(Integer id);
+    int deleteActivityById(Integer id);
 
     Activity selectActivityById(Integer id);
 

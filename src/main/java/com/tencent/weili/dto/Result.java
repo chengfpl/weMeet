@@ -21,6 +21,12 @@ public class Result<T> {
         this.errMsg = errMsg;
     }
 
+    public Result(boolean success, T data, String errMsg) {
+        this.success = success;
+        this.data = data;
+        this.errMsg = errMsg;
+    }
+
     public boolean isSuccess() {
         return success;
     }

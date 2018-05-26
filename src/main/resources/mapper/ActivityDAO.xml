@@ -15,6 +15,7 @@
         <result property="endTime" column="end_time" />
         <result property="deadline" column="deadline" />
         <result property="creator" column="creator" />
+        <result property="flag" column="flag" />
         <!--一对多关系映射-->
         <collection property="userList" javaType="java.util.ArrayList"
                     column="id" ofType="com.tencent.weili.entity.User"
@@ -42,10 +43,11 @@
         WHERE id = #{id}
     </select>
 
-    <delete id="deleteActivity" parameterType="java.lang.Integer">
-        DELETE FROM activity_table
+    <update id="deleteActivityById" parameterType="java.lang.Integer">
+        UPDATE activity_table
+        SET flag = 0
         WHERE id = #{id}
-    </delete>
+    </update>
 
     <insert id="insertActivity" keyProperty="id" useGeneratedKeys="true" parameterType="com.tencent.weili.entity.Activity">
       INSERT INTO

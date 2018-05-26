@@ -15,6 +15,7 @@ import static org.junit.Assert.*;
 @SpringBootTest
 public class ParticipationDAOTest {
 
+
     @Autowired
     private ParticipationDAO participationDAO;
 
@@ -35,9 +36,17 @@ public class ParticipationDAOTest {
      * OK
      */
     @Test
-    public void deleteByCreatorId() throws Exception {
-        int result = participationDAO.deleteByCreatorId("009");
-        assertEquals(1, result);
+    public void deleteByOpenIdAndActivityId() throws Exception {
+        int result = participationDAO.deleteByOpenIdAndActivityId("003", 9);
+        System.out.println(result);
+    }
+
+    /*
+     * OK
+     */
+    @Test
+    public void deleteByActivityId() throws Exception {
+        int result = participationDAO.deleteByActivityId(9);
     }
 
     /*
@@ -47,7 +56,7 @@ public class ParticipationDAOTest {
     public void insertParticipation() throws Exception {
         Participation participation = new Participation();
         participation.setUserId("008");
-        participation.setActivityId(1);
+        participation.setActivityId(3);
         participation.setFlag(true);
         participation.setType(1);
         participation.setCreatorId("009");
