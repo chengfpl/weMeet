@@ -2,6 +2,7 @@ package com.tencent.weili.util;
 
 import com.tencent.weili.entity.User;
 import org.bouncycastle.jce.provider.BouncyCastleProvider;
+
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
@@ -12,6 +13,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.security.AlgorithmParameters;
 import java.security.Security;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Util {
@@ -76,6 +78,12 @@ public class Util {
 
     public static boolean checkTime(String time) {
         //return time.length() == 39;
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        try {
+            format.parse(time);
+        }catch (Exception e){
+            return false;
+        }
         return true;
     }
 

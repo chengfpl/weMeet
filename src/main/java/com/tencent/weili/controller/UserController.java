@@ -1,6 +1,5 @@
 package com.tencent.weili.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tencent.weili.dto.Result;
 import com.tencent.weili.entity.Activity;
 import com.tencent.weili.entity.URLInfo;
@@ -8,10 +7,11 @@ import com.tencent.weili.entity.User;
 import com.tencent.weili.service.UserService;
 import com.tencent.weili.util.Util;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.text.SimpleDateFormat;
+import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -54,18 +54,11 @@ public class UserController {
      * 用户创建活动并加入到数据库当中
      */
     @PostMapping(value = "/create/activity")
-    public  Result<Integer> insertActivity(HttpServletRequest request) throws Exception {
-        Activity activity = new Activity();
-        activity.setName(request.getParameter("name"));
-        activity.setDescription(request.getParameter("description"));
-        activity.setLocation(request.getParameter("location"));
-        activity.setCreator(request.getParameter("openId"));
+    public  Result<Integer> insertActivity(HttpServletRequest request,@Valid Activity  activity,BindingResult bindingResult) {
+        if(bindingResult.hasErrors()){
+            return new Result<Integer>(false,bindingResult.getFieldError().getDefaultMessage());
+        }
         activity.setCount(0);
-        activity.setTimeType(Integer.parseInt(request.getParameter("timeType")));
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        activity.setStartTime(simpleDateFormat.parse(request.getParameter("startTime")));
-        activity.setEndTime(simpleDateFormat.parse(request.getParameter("endTime")));
-        activity.setDeadline(simpleDateFormat.parse(request.getParameter("deadline")));
         int activityId = userService.insertActivity(activity);
         Result<Integer> result = new Result<Integer>(true, activityId);
         return result;
@@ -90,7 +83,13 @@ public class UserController {
             @RequestParam(required = true, value = "openId") String openId,
             @RequestParam(required = true, value = "activityId") Integer activityId,
             @RequestParam(required = true, value = "time") String time) {
-        int tag = userService.insertParticipation(openId, activityId, time);
+        int tag = 0;
+        try{
+            tag = userService.insertParticipation(openId, activityId, time);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new Result<Integer>(false, e.getMessage());
+        }
         return new Result<Integer>(true, tag);
     }
 

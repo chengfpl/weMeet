@@ -1,8 +1,11 @@
 package com.tencent.weili.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.Future;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.List;
 
@@ -11,25 +14,39 @@ public class Activity {
 
     private Integer id;
 
+    @NotEmpty(message = "活动名称name字段不能为空")
     private String name;
 
+    @NotEmpty(message = "活动创建者creator字段不能为空")
     private String creator;
 
+    @NotNull(message = "timeType字段不能为空")
     private Integer timeType;
 
+    @NotEmpty(message = "活动描述description字段不能为空")
     private String description;
 
     private Integer count;
 
     private Integer flag;
-
+    @NotEmpty(message = "活动位置location字段不能为空")
     private String location;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Future(message = "startTime字段需要时将来的时间")
+    @NotNull(message = "startTime字段不能为空")
     private Date startTime;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Future(message = "endTime字段需要时将来的时间")
+    @NotNull(message = "endTime字段不能为空")
     private Date endTime;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @Future(message = "deadline字段需要时将来的时间")
+    @NotNull(message = "deadline字段不能为空")
     private Date deadline;
+
 
     private List<User> userList;
 

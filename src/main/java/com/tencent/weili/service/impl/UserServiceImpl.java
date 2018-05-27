@@ -80,23 +80,28 @@ public class UserServiceImpl implements UserService {
         }
         Participation participation = participationDAO.selectParticipationByOpenIdAndActivityId(openId, activityId);
         int result = 0;
-        if (participation == null) {
-            //活动参与人数加1
-            Activity activity = activityDAO.selectActivityById(activityId);
-            int count = activity.getCount() + 1;
-            activityDAO.updateActivityCount(activityId, count);
-            //插入某个用户的活动参与状况
-            participation = new Participation();
-            participation.setCreatorId(activity.getCreator());
-            participation.setType(activity.getTimeType());
-            participation.setTime(time);
-            participation.setUserId(openId);
-            participation.setActivityId(activityId);
-            participation.setFlag(true);
-            result = participationDAO.insertParticipation(participation);
-        } else {
-            result = participationDAO.updateParticipationByOpenIdAndActivityId(openId, activityId, time);
+        try {
+            if (participation == null) {
+                //活动参与人数加1
+                Activity activity = activityDAO.selectActivityById(activityId);
+                int count = activity.getCount() + 1;
+                activityDAO.updateActivityCount(activityId, count);
+                //插入某个用户的活动参与状况
+                participation = new Participation();
+                participation.setCreatorId(activity.getCreator());
+                participation.setType(activity.getTimeType());
+                participation.setTime(time);
+                participation.setUserId(openId);
+                participation.setActivityId(activityId);
+                participation.setFlag(true);
+                result = participationDAO.insertParticipation(participation);
+            } else {
+                result = participationDAO.updateParticipationByOpenIdAndActivityId(openId, activityId, time);
+            }
+        }catch (RuntimeException e){
+            throw new RuntimeException("获取活动失败或数据库操作失败");
         }
+
         return result;
     }
 

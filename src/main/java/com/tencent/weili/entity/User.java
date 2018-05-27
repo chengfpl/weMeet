@@ -1,8 +1,8 @@
 package com.tencent.weili.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 @JsonIgnoreProperties(value = "activityList")
@@ -10,10 +10,13 @@ public class User {
 
     private Integer id;
 
+    @NotEmpty(message = "活动参与者openId字段不能为空")
     private String openId;
 
+    @NotEmpty(message = "活动参与者名称nickname字段不能为空")
     private String nickname;
 
+    @NotEmpty(message = "活动参与者头像地址avatar字段不能为空")
     private String avatar;
 
     public Integer getId() {
